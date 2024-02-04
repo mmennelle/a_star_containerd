@@ -1,5 +1,7 @@
 import json
 import heapq
+import os
+import time
 
 
 class Node:
@@ -11,31 +13,25 @@ class Node:
 
     def __lt__(self, other):
         return self.cost < other.cost
+
+def wait_for_file(filename):
+    """Wait for the specified file to exist before proceeding."""
+    while not os.path.exists(filename):
+        print(f"Waiting for {filename}...")
+        time.sleep(1)  # Wait for 1 second before checking again
+    print(f"Found {filename}, proceeding with A* solver.")
+
+
 def load_maze(filename='/app/data/maze.txt'):
     with open(filename, 'r') as f:
         maze = [list(line.strip()) for line in f.readlines()]
     return maze
 
-def save_solved_maze(maze, filename='/app/data/solved_maze.txt'):
-    with open(filename, 'w') as f:
-        f.write(''.join(row) + '\n')
 
-# Heuristic function (manhatten pattern)(small maps)
-def heuristic(x1, y1, x2, y2):
-        return abs(x1-x2) + abs(y1-y2)
-# Heuristic function (Euclidean distance)
-# def heuristic(x1, y1, x2, y2):
-#   return math.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2)
-# Heuristic function (Chebyshev distance)
-# def heuristic(x1, y1, x2, y2):
-#   return max(abs(x1 - x2), abs(y1 - y2))
-# Heuristic function (Diagonal distance)(Large maps)
-#def heuristic(x1, y1, x2, y2):
- #   dx = abs(x1 - x2)
-  #  dy = abs(y1 - y2)
-   # diagonal = min(dx, dy)
-    #straight = dx + dy
-    #return math.sqrt(2.0) * diagonal + (straight - 2 * diagonal)
+def save_solved_maze(maze, filename='solved_maze.txt'):
+    with open(filename, 'w') as f:
+        for row in maze:
+            f.write(''.join(row) + '\n')
 
 
 def a_star(maze, start, end):
@@ -73,24 +69,31 @@ def a_star(maze, start, end):
 
     return None
 
-
 def main():
-    maze = load_maze()
+    maze_file = 'maze.txt'
+    solved_maze_file = 'solved_maze.txt'
+
+    # Wait for the maze to be generated
+    wait_for_file(maze_file)
+
+    # Now we can be sure that the maze has been generated
+    maze = load_maze(maze_file)
     start = (0, 0)  # Start position
     end = (len(maze) - 1, len(maze[0]) - 1)  # End position or goal
+
+    # Run A* algorithm
     path = a_star(maze, start, end)
 
     if path:
         print(f"Path found: {path}")
-        # The start and end points should not be overwritten
-        maze[start[0]][start[1]] = 'S'
-        maze[end[0]][end[1]] = 'E'
         for x, y in path:
             if (x, y) != start and (x, y) != end:  # Don't overwrite start/end points
                 maze[x][y] = 'P'  # Mark the path on the maze
-        save_solved_maze(maze)  # Save the solved maze
+        save_solved_maze(maze, solved_maze_file)
+        print(f"Maze solved and saved to {solved_maze_file}")
     else:
         print("No path found.")
+
 
 if __name__ == '__main__':
     main()
