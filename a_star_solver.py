@@ -70,8 +70,8 @@ def a_star(maze, start, end):
     return None
 
 def main():
-    maze_file = 'maze.txt'
-    solved_maze_file = 'solved_maze.txt'
+    maze_file = '/app/data/maze.txt'
+    solved_maze_file = '/app/data/solved_maze.txt'
 
     # Wait for the maze to be generated
     wait_for_file(maze_file)
