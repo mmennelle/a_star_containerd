@@ -1,0 +1,5 @@
+FROM python:3.8-slim
+WORKDIR /app
+COPY maze_display.py /app
+RUN pip install numpy matplotlib
+CMD ["python", "maze_display.py"]

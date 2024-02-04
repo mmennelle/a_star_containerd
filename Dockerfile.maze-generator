@@ -1,0 +1,5 @@
+FROM python:3.8-slim
+WORKDIR /app
+COPY maze_generator.py /app
+RUN pip install numpy
+CMD ["python", "maze_generator.py"]
