@@ -28,7 +28,7 @@ def load_maze(filename='/app/data/maze.txt'):
     return maze
 
 
-def save_solved_maze(maze, filename='solved_maze.txt'):
+def save_solved_maze(maze, filename='/app/data/solved_maze.txt'):
     with open(filename, 'w') as f:
         for row in maze:
             f.write(''.join(row) + '\n')
