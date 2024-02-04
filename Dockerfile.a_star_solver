@@ -3,3 +3,4 @@ WORKDIR /app
 COPY a_star_solver.py /app
 RUN pip install numpy matplotlib
 CMD ["python", "a_star_solver.py"]
+
