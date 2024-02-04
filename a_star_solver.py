@@ -11,13 +11,14 @@ class Node:
 
     def __lt__(self, other):
         return self.cost < other.cost
-def load_maze(filename='maze.txt'):
+def load_maze(filename='/app/data/maze.txt'):
     with open(filename, 'r') as f:
-        return json.load(f)
+        maze = [list(line.strip()) for line in f.readlines()]
+    return maze
 
-def save_solved_maze(maze, filename='solved_maze.txt'):
+def save_solved_maze(maze, filename='/app/data/solved_maze.txt'):
     with open(filename, 'w') as f:
-        json.dump(maze, f)
+        f.write(''.join(row) + '\n')
 
 # Heuristic function (manhatten pattern)(small maps)
 def heuristic(x1, y1, x2, y2):

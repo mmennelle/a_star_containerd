@@ -26,9 +26,9 @@ def marching_squares(noise, threshold=0.2):
 
     return maze
 
-def save_maze(maze, filename='maze.txt'):
+def save_maze(maze, filename='/app/data/maze.txt'):
     with open(filename, 'w') as f:
-        json.dump(maze, f)
+        f.write(''.join(row)+"\n")
 
 def main():
     width, height = 5, 5

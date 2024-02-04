@@ -3,24 +3,27 @@ services:
   maze_generator:
     build:
       context: .
-      dockerfile: Dockerfile.maze_display.maze_generator
+      dockerfile: Dockerfile.maze_display
     volumes:
-      - ./data:/app/data
+      - maze_data:/app/data
 
   a_star_solver:
     build:
       context: .
       dockerfile: Dockerfile.a_star_solver
     volumes:
-      - ./data:/app/data
+      - maze_data:/app/data
     depends_on:
       - maze_generator
 
   maze_display:
     build:
       context: .
-      dockerfile: Dockerfile.maze_display.maze_display
+      dockerfile: Dockerfile.maze_display
     volumes:
-      - ./data:/app/data
+      - maze_data:/app/data
     depends_on:
       - a_star_solver
+
+volumes:
+  maze_data:
