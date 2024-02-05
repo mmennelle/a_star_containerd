@@ -1,4 +1,6 @@
 import json
+import PIL
+from PIL import Image
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -18,11 +20,14 @@ def display_maze(maze):
 
     plt.imshow(grid)
     plt.title('Maze with Path')
+    plt.savefig("/app/data/show_maze.png")
     plt.show()
 
 def main():
     maze = load_solved_maze()
     display_maze(maze)
+    
+
 
 if __name__ == '__main__':
     main()

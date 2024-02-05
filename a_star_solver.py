@@ -4,6 +4,7 @@ import os
 import time
 
 
+
 class Node:
     def __init__(self, x, y, cost, prev):
         self.x = x
