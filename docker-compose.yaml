@@ -3,7 +3,7 @@ services:
   maze_generator:
     build:
       context: .
-      dockerfile: Dockerfile.maze_display
+      dockerfile: Dockerfile.maze-generator
     volumes:
       - maze_data:/app/data
 

@@ -14,7 +14,7 @@ class Node:
     def __lt__(self, other):
         return self.cost < other.cost
 
-def wait_for_file(filename = '/data/maze.txt'):
+def wait_for_file(filename = '/app/data/maze.txt'):
     """Wait for the specified file to exist before proceeding."""
     while not os.path.exists(filename):
         print(f"Waiting for {filename}...")
@@ -22,17 +22,17 @@ def wait_for_file(filename = '/data/maze.txt'):
     print(f"Found {filename}, proceeding with A* solver.")
 
 
-def load_maze(filename='/data/maze.txt'):
+def load_maze(filename='/app/data/maze.txt'):
     with open(filename, 'r') as f:
-        maze = [list(line.strip()) for line in f.readlines()]
-    return maze
+        return json.load(f)
 
 
-def save_solved_maze(maze, filename='/data/solved_maze.txt'):
+def save_solved_maze(maze, filename='/app/data/solved_maze.txt'):
     with open(filename, 'w') as f:
-        for row in maze:
-            f.write(''.join(row) + '\n')
+             json.dump(maze,f)
 
+def heuristic(x1, y1, x2, y2):
+    return abs(x1-x2) + abs(y1-y2) #manhattan distance
 
 def a_star(maze, start, end):
     start_node = Node(start[0], start[1], 0, None)
@@ -70,8 +70,8 @@ def a_star(maze, start, end):
     return None
 
 def main():
-    maze_file = '/data/maze.txt'
-    solved_maze_file = '/data/solved_maze.txt'
+    maze_file = '/app/data/maze.txt'
+    solved_maze_file = '/app/data/solved_maze.txt'
 
     # Wait for the maze to be generated
     wait_for_file(maze_file)
