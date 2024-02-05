@@ -2,7 +2,7 @@ import json
 import numpy as np
 import matplotlib.pyplot as plt
 
-def load_solved_maze(filename='app/data/solved_maze.txt'):
+def load_solved_maze(filename='/data/solved_maze.txt'):
     with open(filename, 'r') as f:
        maze = [list(line.strip()) for line in f.readlines()]
     return maze
